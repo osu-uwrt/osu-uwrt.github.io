@@ -48,7 +48,7 @@ function init() {
     const loader = new THREE.VRMLLoader();
     
     loader.load('assets/puddles.wrl', function (vrml){
-                    scene.add(vrml.scene);
+                    scene.add(vrml);
                 }, undefined, function(error){
                     console.error( error);
                 });
