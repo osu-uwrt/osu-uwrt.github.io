@@ -1,16 +1,7 @@
-import * as THREE from 'three';
+import * as THREE from '../node_modules/three/src/Three.js';
+import {VRMLLoader} from '../node_modules/three/examples/jsm/loaders/VRMLLoader.js';
+import { OrbitControls } from '../node_modules/three/examples/jsm/controls/OrbitControls.js';
 
-if ( WEBGL.isWebGLAvailable() ) {
-
-	// Initiate function or other initializations here
-	animate();
-
-} else {
-
-	const warning = WEBGL.getWebGLErrorMessage();
-	document.getElementById( 'container' ).appendChild( warning );
-
-}
 
 var container;
 var camera, controls, scene, renderer;
@@ -19,7 +10,8 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
 init();
-animate();
+//animate();
+
 
 function init() {
     container = document.createElement('div');
@@ -45,7 +37,7 @@ function init() {
     scene.add(fillLight);
     scene.add(backLight);
     
-    const loader = new THREE.VRMLLoader();
+    const loader = new VRMLLoader();
     
     loader.load('assets/puddles.wrl', function (vrml){
                     scene.add(vrml);
@@ -64,13 +56,17 @@ renderer.setClearColor(new THREE.Color("hsl(0, 0%, 10%)"));
 
 container.appendChild(renderer.domElement);
 
+
+
+controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.25;
+controls.enableZoom = false;
+
 function render() {
     requestAnimationFrame(render);
     controls.update();
     renderer.render(scene, camera);
 }
 
-controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.25;
-controls.enableZoom = false;
+render();
